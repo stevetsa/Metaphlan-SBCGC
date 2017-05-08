@@ -1,0 +1,955 @@
+{
+  "class": "Workflow",
+  "steps": [
+    {
+      "id": "#metaphlan_profile",
+      "run": {
+        "cwlVersion": "sbg:draft-2",
+        "temporaryFailCodes": [],
+        "baseCommand": [
+          "tar",
+          "xjf"
+        ],
+        "class": "CommandLineTool",
+        "label": "metaphlan_profile",
+        "sbg:modifiedOn": 1486560246,
+        "stdout": "",
+        "sbg:revision": 4,
+        "sbg:createdOn": 1486536291,
+        "sbg:project": "tsang/test-metaphlan",
+        "sbg:cmdPreview": "tar xjf  /path/to/input_fastq-1.ext --to-stdout | /metaphlan/metaphlan.py --bowtie2db /metaphlan/bowtie2db/mpa --bowtie2_exe /bowtie2-2.2.5/bowtie2 --bt2_ps very-sensitive --input_type multifastq --bowtie2out BM_input_fastq-1.bt2out > BM_input_fastq-1.txt",
+        "sbg:id": "tsang/test-metaphlan/metaphlan-profile/4",
+        "sbg:validationErrors": [],
+        "outputs": [
+          {
+            "id": "#profile_samples",
+            "sbg:fileTypes": "TXT",
+            "outputBinding": {
+              "glob": "*.txt"
+            },
+            "type": [
+              "null",
+              "File"
+            ]
+          }
+        ],
+        "successCodes": [],
+        "stdin": "",
+        "sbg:latestRevision": 4,
+        "y": 224.015625,
+        "sbg:createdBy": "tsang",
+        "x": 257,
+        "arguments": [
+          {
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "  $job.inputs.input_fastq[0].path + ' ' +\n'--to-stdout | /metaphlan/metaphlan.py ' + \n'--bowtie2db /metaphlan/bowtie2db/mpa --bowtie2_exe /bowtie2-2.2.5/bowtie2 ' +\n'--bt2_ps very-sensitive --input_type multifastq ' +\n'--bowtie2out ' + 'BM_' +\n  $job.inputs.input_fastq[0].path.split(\"/\").pop().split(\".\")[0] +\n'.bt2out > BM_' +\n  $job.inputs.input_fastq[0].path.split(\"/\").pop().split(\".\")[0] +\n '.txt'"
+            },
+            "position": 2,
+            "separate": true
+          }
+        ],
+        "sbg:contributors": [
+          "tsang"
+        ],
+        "id": "tsang/test-metaphlan/metaphlan-profile/4",
+        "requirements": [
+          {
+            "requirements": [
+              {
+                "dockerPull": "rabix/js-engine",
+                "class": "DockerRequirement"
+              }
+            ],
+            "class": "ExpressionEngineRequirement",
+            "id": "#cwl-js-engine"
+          }
+        ],
+        "sbg:job": {
+          "inputs": {
+            "input_fastq": [
+              {
+                "secondaryFiles": [],
+                "class": "File",
+                "path": "/path/to/input_fastq-1.ext",
+                "size": 0
+              },
+              {
+                "secondaryFiles": [],
+                "class": "File",
+                "path": "/path/to/input_fastq-2.ext",
+                "size": 0
+              }
+            ]
+          },
+          "allocatedResources": {
+            "mem": 1000,
+            "cpu": 1
+          }
+        },
+        "sbg:modifiedBy": "tsang",
+        "sbg:revisionNotes": "batch mode input",
+        "inputs": [
+          {
+            "required": true,
+            "sbg:fileTypes": "TAR.BZ2",
+            "type": [
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#input_fastq"
+          }
+        ],
+        "sbg:image_url": null,
+        "sbg:sbgMaintained": false,
+        "description": "tar xjf SRS020336.tar.bz2 --to-stdout | /metaphlan/metaphlan.py --bowtie2db /metaphlan/bowtie2db/mpa --bowtie2_exe /bowtie2-2.2.5/bowtie2 --bt2_ps very-sensitive --input_type multifastq --bowtie2out BM_SRS020336.bt2out > profiled_samples/BM_SRS020336.txt",
+        "hints": [
+          {
+            "value": 1,
+            "class": "sbg:CPURequirement"
+          },
+          {
+            "value": 1000,
+            "class": "sbg:MemRequirement"
+          },
+          {
+            "dockerPull": "stevetsa/metaphlan:2",
+            "class": "DockerRequirement",
+            "dockerImageId": ""
+          }
+        ],
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revision": 0,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486536291,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 1,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486538249,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 2,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486555845,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 3,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486559785,
+            "sbg:revisionNotes": "batch - pass in array of files"
+          },
+          {
+            "sbg:revision": 4,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486560246,
+            "sbg:revisionNotes": "batch mode input"
+          }
+        ]
+      },
+      "inputs": [
+        {
+          "id": "#metaphlan_profile.input_fastq",
+          "source": [
+            "#input_fastq"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "id": "#metaphlan_profile.profile_samples"
+        }
+      ],
+      "sbg:x": 257,
+      "sbg:y": 224.015625
+    },
+    {
+      "id": "#metaphlan_annotate",
+      "run": {
+        "cwlVersion": "sbg:draft-2",
+        "temporaryFailCodes": [],
+        "baseCommand": [
+          "/graphlan/graphlan_annotate.py"
+        ],
+        "class": "CommandLineTool",
+        "label": "metaphlan_annotate",
+        "sbg:modifiedOn": 1486585755,
+        "stdout": "",
+        "sbg:revision": 4,
+        "sbg:createdOn": 1486578066,
+        "sbg:project": "tsang/test-metaphlan",
+        "sbg:cmdPreview": "/graphlan/graphlan_annotate.py",
+        "sbg:id": "tsang/test-metaphlan/metaphlan-annotate/4",
+        "sbg:validationErrors": [],
+        "outputs": [
+          {
+            "id": "#output",
+            "sbg:fileTypes": "XML",
+            "outputBinding": {
+              "glob": "*.xml"
+            },
+            "type": [
+              "null",
+              "File"
+            ]
+          }
+        ],
+        "successCodes": [],
+        "stdin": "",
+        "sbg:latestRevision": 4,
+        "y": 142.4600634040932,
+        "sbg:createdBy": "tsang",
+        "x": 545.1110948456659,
+        "arguments": [],
+        "sbg:contributors": [
+          "tsang"
+        ],
+        "id": "tsang/test-metaphlan/metaphlan-annotate/4",
+        "requirements": [
+          {
+            "requirements": [
+              {
+                "dockerPull": "rabix/js-engine",
+                "class": "DockerRequirement"
+              }
+            ],
+            "class": "ExpressionEngineRequirement",
+            "id": "#cwl-js-engine"
+          }
+        ],
+        "sbg:job": {
+          "inputs": {
+            "annotation": {
+              "secondaryFiles": [],
+              "class": "File",
+              "path": "/path/to/BM_SRS000000.annot.ext",
+              "size": 0
+            },
+            "tree": {
+              "secondaryFiles": [],
+              "class": "File",
+              "path": "/path/to/tree.ext",
+              "size": 0
+            },
+            "outxml": ""
+          },
+          "allocatedResources": {
+            "mem": 1000,
+            "cpu": 1
+          }
+        },
+        "sbg:modifiedBy": "tsang",
+        "inputs": [
+          {
+            "required": false,
+            "id": "#tree",
+            "sbg:fileTypes": "TXT",
+            "type": [
+              "null",
+              "File"
+            ],
+            "inputBinding": {
+              "position": 2,
+              "sbg:cmdInclude": true,
+              "separate": true
+            }
+          },
+          {
+            "inputBinding": {
+              "valueFrom": {
+                "class": "Expression",
+                "engine": "#cwl-js-engine",
+                "script": "$job.inputs.annotation.path.split(\"/\").pop().split(\".\")[0] + \".xml\""
+              },
+              "position": 3,
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "type": [
+              "null",
+              "string"
+            ],
+            "id": "#outxml"
+          },
+          {
+            "required": false,
+            "id": "#annotation",
+            "sbg:fileTypes": "TXT",
+            "type": [
+              "null",
+              "File"
+            ],
+            "inputBinding": {
+              "position": 1,
+              "sbg:cmdInclude": true,
+              "prefix": "--annot",
+              "separate": true
+            }
+          }
+        ],
+        "sbg:image_url": null,
+        "sbg:sbgMaintained": false,
+        "description": "graphlan_annotate.py --annot tmp/BM_SRS013506.annot.txt tmp/BM_SRS013506.tree.txt tmp/BM_SRS013506.xml",
+        "hints": [
+          {
+            "value": 1,
+            "class": "sbg:CPURequirement"
+          },
+          {
+            "value": 1000,
+            "class": "sbg:MemRequirement"
+          },
+          {
+            "dockerPull": "stevetsa/metaphlan:2",
+            "class": "DockerRequirement",
+            "dockerImageId": ""
+          }
+        ],
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revision": 0,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486578066,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 1,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486578735,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 2,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486578940,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 3,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486579417,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 4,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486585755,
+            "sbg:revisionNotes": null
+          }
+        ]
+      },
+      "inputs": [
+        {
+          "id": "#metaphlan_annotate.tree",
+          "source": [
+            "#metaphlan2graphlan.outtree"
+          ]
+        },
+        {
+          "id": "#metaphlan_annotate.outxml"
+        },
+        {
+          "id": "#metaphlan_annotate.annotation",
+          "source": [
+            "#metaphlan2graphlan.outannot"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "id": "#metaphlan_annotate.output"
+        }
+      ],
+      "sbg:x": 545.1110948456659,
+      "sbg:y": 142.4600634040932
+    },
+    {
+      "id": "#metaphlan2graphlan",
+      "run": {
+        "cwlVersion": "sbg:draft-2",
+        "temporaryFailCodes": [],
+        "baseCommand": [
+          "/metaphlan/plotting_scripts/metaphlan2graphlan.py"
+        ],
+        "class": "CommandLineTool",
+        "label": "metaphlan2graphlan",
+        "sbg:modifiedOn": 1486593468,
+        "stdout": "",
+        "sbg:revision": 6,
+        "sbg:createdOn": 1486573918,
+        "sbg:project": "tsang/test-metaphlan",
+        "sbg:cmdPreview": "/metaphlan/plotting_scripts/metaphlan2graphlan.py",
+        "sbg:id": "tsang/test-metaphlan/metaphlan2graphlan/6",
+        "sbg:validationErrors": [],
+        "outputs": [
+          {
+            "id": "#outtree",
+            "sbg:fileTypes": "TXT",
+            "outputBinding": {
+              "glob": "*.tree.txt"
+            },
+            "type": [
+              "null",
+              "File"
+            ]
+          },
+          {
+            "id": "#outannot",
+            "sbg:fileTypes": "TXT",
+            "outputBinding": {
+              "glob": "*.annot.txt"
+            },
+            "type": [
+              "null",
+              "File"
+            ]
+          }
+        ],
+        "successCodes": [],
+        "stdin": "",
+        "sbg:latestRevision": 6,
+        "y": 391.46006343058417,
+        "sbg:createdBy": "tsang",
+        "x": 341.11109945509173,
+        "arguments": [],
+        "sbg:contributors": [
+          "tsang"
+        ],
+        "id": "tsang/test-metaphlan/metaphlan2graphlan/6",
+        "requirements": [
+          {
+            "requirements": [
+              {
+                "dockerPull": "rabix/js-engine",
+                "class": "DockerRequirement"
+              }
+            ],
+            "class": "ExpressionEngineRequirement",
+            "id": "#cwl-js-engine"
+          }
+        ],
+        "sbg:job": {
+          "inputs": {
+            "annotation": "annotation-string-value",
+            "treefile": "BMS",
+            "profile": {
+              "secondaryFiles": [],
+              "class": "File",
+              "path": "/path/to/BM_SRS013506.txt",
+              "size": 0
+            }
+          },
+          "allocatedResources": {
+            "mem": 1000,
+            "cpu": 1
+          }
+        },
+        "sbg:modifiedBy": "tsang",
+        "inputs": [
+          {
+            "inputBinding": {
+              "valueFrom": {
+                "class": "Expression",
+                "engine": "#cwl-js-engine",
+                "script": "$job.inputs.profile.path.split(\"/\").pop().split(\".\")[0] + \".tree.txt\""
+              },
+              "position": 2,
+              "sbg:cmdInclude": true,
+              "prefix": "--tree_file",
+              "separate": true
+            },
+            "type": [
+              "null",
+              "string"
+            ],
+            "id": "#treefile"
+          },
+          {
+            "required": false,
+            "id": "#profile",
+            "sbg:fileTypes": "TXT",
+            "type": [
+              "null",
+              "File"
+            ],
+            "inputBinding": {
+              "position": 1,
+              "sbg:cmdInclude": true,
+              "separate": true
+            }
+          },
+          {
+            "inputBinding": {
+              "valueFrom": {
+                "class": "Expression",
+                "engine": "#cwl-js-engine",
+                "script": "$job.inputs.profile.path.split(\"/\").pop().split(\".\")[0] + \".annot.txt\""
+              },
+              "position": 3,
+              "sbg:cmdInclude": true,
+              "prefix": "--annot_file",
+              "separate": true
+            },
+            "type": [
+              "null",
+              "string"
+            ],
+            "id": "#annotation"
+          }
+        ],
+        "sbg:image_url": null,
+        "sbg:sbgMaintained": false,
+        "description": "plotting_scripts/metaphlan2graphlan.py profiled_samples/BM_SRS013506.txt  --tree_file tmp/BM_SRS013506.tree.txt --annot_file tmp/BM_SRS013506.annot.txt",
+        "hints": [
+          {
+            "value": 1,
+            "class": "sbg:CPURequirement"
+          },
+          {
+            "value": 1000,
+            "class": "sbg:MemRequirement"
+          },
+          {
+            "dockerPull": "stevetsa/metaphlan:2",
+            "class": "DockerRequirement",
+            "dockerImageId": ""
+          }
+        ],
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revision": 0,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486573918,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 1,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486576116,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 2,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486576195,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 3,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486577302,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 4,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486593247,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 5,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486593293,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 6,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486593468,
+            "sbg:revisionNotes": null
+          }
+        ]
+      },
+      "inputs": [
+        {
+          "id": "#metaphlan2graphlan.treefile"
+        },
+        {
+          "id": "#metaphlan2graphlan.profile",
+          "source": [
+            "#metaphlan_profile.profile_samples"
+          ]
+        },
+        {
+          "id": "#metaphlan2graphlan.annotation"
+        }
+      ],
+      "outputs": [
+        {
+          "id": "#metaphlan2graphlan.outtree"
+        },
+        {
+          "id": "#metaphlan2graphlan.outannot"
+        }
+      ],
+      "sbg:x": 341.11109945509173,
+      "sbg:y": 391.46006343058417
+    },
+    {
+      "id": "#metaphlan_graphlan",
+      "run": {
+        "cwlVersion": "sbg:draft-2",
+        "temporaryFailCodes": [],
+        "baseCommand": [
+          "/graphlan/graphlan.py"
+        ],
+        "class": "CommandLineTool",
+        "label": "metaphlan_graphlan",
+        "sbg:modifiedOn": 1486597249,
+        "stdout": "",
+        "sbg:revision": 2,
+        "sbg:createdOn": 1486579469,
+        "sbg:project": "tsang/test-metaphlan",
+        "sbg:cmdPreview": "/graphlan/graphlan.py",
+        "sbg:id": "tsang/test-metaphlan/metaphlan-graphlan/2",
+        "sbg:validationErrors": [],
+        "outputs": [
+          {
+            "id": "#output",
+            "sbg:fileTypes": "PNG",
+            "outputBinding": {
+              "glob": "*.png"
+            },
+            "type": [
+              "null",
+              "File"
+            ]
+          }
+        ],
+        "successCodes": [],
+        "stdin": "",
+        "sbg:latestRevision": 2,
+        "y": 203.7299262466176,
+        "sbg:createdBy": "tsang",
+        "x": 819.8571978296555,
+        "arguments": [],
+        "sbg:contributors": [
+          "tsang"
+        ],
+        "id": "tsang/test-metaphlan/metaphlan-graphlan/2",
+        "requirements": [
+          {
+            "requirements": [
+              {
+                "dockerPull": "rabix/js-engine",
+                "class": "DockerRequirement"
+              }
+            ],
+            "class": "ExpressionEngineRequirement",
+            "id": "#cwl-js-engine"
+          }
+        ],
+        "sbg:job": {
+          "inputs": {
+            "outPNG": "outPNG-string-value",
+            "inputXML": {
+              "secondaryFiles": [],
+              "class": "File",
+              "path": "/path/to/inputXML.ext",
+              "size": 0
+            },
+            "DPI": 0
+          },
+          "allocatedResources": {
+            "mem": 1000,
+            "cpu": 1
+          }
+        },
+        "sbg:modifiedBy": "tsang",
+        "inputs": [
+          {
+            "inputBinding": {
+              "valueFrom": {
+                "class": "Expression",
+                "engine": "#cwl-js-engine",
+                "script": "$job.inputs.inputXML.path.split(\"/\").pop().split(\".\")[0] + \".png\""
+              },
+              "position": 3,
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "type": [
+              "null",
+              "string"
+            ],
+            "id": "#outPNG"
+          },
+          {
+            "inputBinding": {
+              "position": 2,
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "required": false,
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#inputXML"
+          },
+          {
+            "sbg:toolDefaultValue": "200",
+            "id": "#DPI",
+            "type": [
+              "null",
+              "int"
+            ],
+            "sbg:stageInput": null,
+            "inputBinding": {
+              "position": 1,
+              "sbg:cmdInclude": true,
+              "prefix": "--dpi",
+              "separate": true
+            }
+          }
+        ],
+        "sbg:image_url": null,
+        "sbg:sbgMaintained": false,
+        "description": "",
+        "hints": [
+          {
+            "value": 1,
+            "class": "sbg:CPURequirement"
+          },
+          {
+            "value": 1000,
+            "class": "sbg:MemRequirement"
+          },
+          {
+            "dockerPull": "stevetsa/metaphlan:2",
+            "class": "DockerRequirement",
+            "dockerImageId": ""
+          }
+        ],
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revision": 0,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486579469,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 1,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486585589,
+            "sbg:revisionNotes": null
+          },
+          {
+            "sbg:revision": 2,
+            "sbg:modifiedBy": "tsang",
+            "sbg:modifiedOn": 1486597249,
+            "sbg:revisionNotes": null
+          }
+        ]
+      },
+      "inputs": [
+        {
+          "id": "#metaphlan_graphlan.outPNG"
+        },
+        {
+          "id": "#metaphlan_graphlan.inputXML",
+          "source": [
+            "#metaphlan_annotate.output"
+          ]
+        },
+        {
+          "id": "#metaphlan_graphlan.DPI"
+        }
+      ],
+      "outputs": [
+        {
+          "id": "#metaphlan_graphlan.output"
+        }
+      ],
+      "sbg:x": 819.8571978296555,
+      "sbg:y": 203.7299262466176
+    }
+  ],
+  "requirements": [],
+  "inputs": [
+    {
+      "sbg:y": 221,
+      "sbg:fileTypes": "TAR.BZ2",
+      "type": [
+        {
+          "type": "array",
+          "items": "File"
+        }
+      ],
+      "label": "input_fastq",
+      "id": "#input_fastq",
+      "sbg:x": 85
+    }
+  ],
+  "outputs": [
+    {
+      "sbg:y": 198.42858689171933,
+      "sbg:includeInPorts": true,
+      "required": false,
+      "label": "output",
+      "id": "#output",
+      "sbg:x": 998.428639343807,
+      "sbg:fileTypes": "PNG",
+      "type": [
+        "null",
+        "File"
+      ],
+      "source": [
+        "#metaphlan_graphlan.output"
+      ]
+    },
+    {
+      "sbg:y": 588.4127773449293,
+      "sbg:includeInPorts": true,
+      "type": [
+        "null",
+        "File"
+      ],
+      "label": "profile_samples",
+      "id": "#profile_samples",
+      "sbg:x": 1014.4446147910124,
+      "sbg:fileTypes": "TXT",
+      "required": false,
+      "source": [
+        "#metaphlan_profile.profile_samples"
+      ]
+    },
+    {
+      "sbg:y": 326.8254448616064,
+      "sbg:includeInPorts": true,
+      "type": [
+        "null",
+        "File"
+      ],
+      "label": "outtree",
+      "id": "#outtree",
+      "sbg:x": 1003.0159985008196,
+      "sbg:fileTypes": "TXT",
+      "required": false,
+      "source": [
+        "#metaphlan2graphlan.outtree"
+      ]
+    },
+    {
+      "sbg:y": 63.174624503605784,
+      "sbg:includeInPorts": true,
+      "type": [
+        "null",
+        "File"
+      ],
+      "label": "output_1",
+      "id": "#output_1",
+      "sbg:x": 1004.1270411052395,
+      "sbg:fileTypes": "XML",
+      "required": false,
+      "source": [
+        "#metaphlan_annotate.output"
+      ]
+    },
+    {
+      "sbg:y": 450.63496806129757,
+      "sbg:includeInPorts": true,
+      "type": [
+        "null",
+        "File"
+      ],
+      "label": "outannot",
+      "id": "#outannot",
+      "sbg:x": 1012.3809789021786,
+      "sbg:fileTypes": "TXT",
+      "required": false,
+      "source": [
+        "#metaphlan2graphlan.outannot"
+      ]
+    }
+  ],
+  "sbg:createdBy": "tsang",
+  "sbg:canvas_zoom": 0.6999999999999997,
+  "sbg:projectName": "PUBLIC-metaphlan",
+  "sbg:modifiedOn": 1493751774,
+  "sbg:canvas_y": 0,
+  "sbg:sbgMaintained": false,
+  "sbg:project": "tsang/public-metaphlan",
+  "sbg:links": [
+    {
+      "label": "MetaPhlAn Main Page",
+      "id": "http://huttenhower.sph.harvard.edu/metaphlan"
+    },
+    {
+      "label": "Original article",
+      "id": "http://www.nature.com/nmeth/journal/v9/n8/full/nmeth.2066.html"
+    },
+    {
+      "label": "Tutorial",
+      "id": "https://bitbucket.org/nsegata/metaphlan/wiki/MetaPhlAn_Pipelines_Tutorial"
+    }
+  ],
+  "sbg:validationErrors": [],
+  "sbg:batchInput": "#input_fastq",
+  "sbg:canvas_x": 0,
+  "sbg:batchBy": {
+    "type": "item"
+  },
+  "sbg:latestRevision": 4,
+  "sbg:toolAuthor": "The Huttenhower Lab",
+  "sbg:categories": [
+    "metagenomics",
+    "microbe",
+    "microbiome"
+  ],
+  "sbg:contributors": [
+    "tsang"
+  ],
+  "sbg:modifiedBy": "tsang",
+  "sbg:revisionNotes": "output all files",
+  "sbg:image_url": "https://cgc-brood.sbgenomics.com/static/tsang/public-metaphlan/metaphlan-workflow/4.png",
+  "sbg:id": "tsang/public-metaphlan/metaphlan-workflow/4",
+  "sbg:createdOn": 1492619016,
+  "sbg:appVersion": [
+    "sbg:draft-2"
+  ],
+  "sbg:revision": 4,
+  "sbg:revisionsInfo": [
+    {
+      "sbg:revision": 0,
+      "sbg:modifiedBy": "tsang",
+      "sbg:modifiedOn": 1492619016,
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 1,
+      "sbg:modifiedBy": "tsang",
+      "sbg:modifiedOn": 1492619048,
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 2,
+      "sbg:modifiedBy": "tsang",
+      "sbg:modifiedOn": 1492619176,
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 3,
+      "sbg:modifiedBy": "tsang",
+      "sbg:modifiedOn": 1492619761,
+      "sbg:revisionNotes": "Updated description"
+    },
+    {
+      "sbg:revision": 4,
+      "sbg:modifiedBy": "tsang",
+      "sbg:modifiedOn": 1493751774,
+      "sbg:revisionNotes": "output all files"
+    }
+  ],
+  "id": "tsang/public-metaphlan/metaphlan-workflow/4",
+  "label": "metaphlan",
+  "description": "MetaPhlAn: Metagenomic Phylogenetic Analysis\n\nMetaPhlAn is a computational tool for profiling the composition of microbial communities from metagenomic shotgun sequencing data. MetaPhlAn relies on unique clade-specific marker genes identified from 3,000 reference genomes.\n\nThis tool can be run in batch mode.\n\nInput - FASTQ files in TAR.BZ2 format\nOutput - Taxonomic Cladogram in .PNG format",
+  "hints": []
+}
